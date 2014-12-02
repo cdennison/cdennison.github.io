@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-more.js"></script>
+<script>
+$(document).ready(function(){
+
+js_obj = {
+
+        chart: {
+            type: 'bubble',
+            plotBorderWidth: 1,
+            zoomType: 'xy',
+            renderTo: 'container'
+        },
+
+        title: {
+            text: 'Highcharts bubbles with radial gradient fill'
+        },
+
+        xAxis: {
+            gridLineWidth: 1
+        },
+
+        yAxis: {
+            startOnTick: false,
+            endOnTick: false
+        },
+    };
+
+    chart1 = new Highcharts.Chart(js_obj);
+	
+	    var json_str = '{"series_collection": {"1": {"data": [[42, 38, 20], [6, 18, 1]], "name": "test1"}, "2": {"data": [[42, 38, 20], [6, 18, 1]], "name": "test2"}}}';
+    
+    var json_input = JSON.parse(json_str);
+    
+	//color:'rgba(0, 0, 0, .2)',marker:{symbol:'square',fillOpacity:0.1}
+	
+    $.each(json_input.series_collection, function (index, series) {
+        chart1.addSeries({
+            name: series.name,
+            data: series.data,
+			marker: {
+                fillColor: {
+                    radialGradient: { cx: 0.4, cy: 0.3, r: 0.7 },
+                    stops: [
+                        [0, 'rgba(255,255,255,0.5)'],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0.5).get('rgba')]
+                    ]
+                }
+            }
+        });
+    });
+	
+	});
+</script>
+</head>
+<body>
+ 
+<div id="container" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto;"></div>
+
+</body>
+</html>
