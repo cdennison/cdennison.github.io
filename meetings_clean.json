@@ -1,0 +1,54 @@
+[
+	{
+		"code": "OSD",
+		"day": "Sun",
+		"town": "Abington,MA",
+		"name": "Early Bird Dawn Patrol",
+		"address": "United Ch., Rte. 18, 10 Bedford St.",
+		"time": "7-8 am",
+		"handicap": "",
+		"position": {
+			"lat": 42.1041325,
+			"lng": -70.94919399999999
+		}
+	},
+	{
+		"code": "O12",
+		"day": "Sun",
+		"town": "Acton,MA",
+		"name": "Step",
+		"address": "St. Matthew's Ch., 435 Central St",
+		"time": "8-9 p.m.",
+		"handicap": "",
+		"position": {
+			"lat": 42.4927086,
+			"lng": -71.4762247
+		}
+	},
+	{
+		"code": "OBB12",
+		"day": "Sun",
+		"town": "Allston,MA",
+		"name": "Serenity",
+		"address": "Hill Baptist, 279 N. Harvard",
+		"time": "7:30 p.m.",
+		"handicap": "",
+		"position": {
+			"lat": 42.360488,
+			"lng": -71.1293049
+		}
+	},
+	{
+		"code": "OSD",
+		"day": "Sun",
+		"town": "Amesbury,MA",
+		"name": "Progress",
+		"address": "Progress House, 39 High St.",
+		"time": "10-11:15 a.m.",
+		"handicap": "",
+		"position": {
+			"lat": 42.858967,
+			"lng": -70.93284
+		}
+	}
+]

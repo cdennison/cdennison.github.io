@@ -1,0 +1,114 @@
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Google Maps JavaScript API v3 Example: Geocoding Simple</title>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyDpQD_Z2xomoGD7KZ-yUDF_H64lgd6Hwho&sensor=false"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="theme/jquery-ui.css">
+
+    <script type="text/javascript">
+
+        $( function() {
+            $( "#day" ).selectmenu({
+                change: function(event, ui) {
+                    alert(ui.item.value);
+                    initialize(ui.item.value);
+                }
+            });
+
+            $( "#files" ).selectmenu();
+
+            $( "#number" )
+                .selectmenu()
+                .selectmenu( "menuWidget" )
+                .addClass( "overflow" );
+
+            $( "#salutation" ).selectmenu();
+        } );
+
+        $("#speed").selectmenu({
+
+        });
+
+        var map;
+        var address ="St. Matthew's Ch., 435 Central St, Acton, MA";
+
+        function initialize(day) {
+
+//            var jsonurl = "https://api.myjson.com/bins/kptnt";
+            var jsonurl = "meetings_clean.json";
+            $.get( jsonurl, {
+            })
+                .fail(function( jqxhr, textStatus, error ) {
+                    var err = textStatus + ", " + error;
+                    console.log( "Request Failed: " + err );
+                })
+                .done(function( meetings ) {
+
+//Filter
+                    var meetingsFiltered=$(meetings).filter(function (i,n){return n.day==='Sun'});
+
+
+
+                    var latlng = new google.maps.LatLng(-34.397, 150.644);
+                    var myOptions = {
+                        zoom: 8,
+                        center: latlng,
+                        mapTypeControl: true,
+                        mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+                        navigationControl: true,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+
+            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                Array.from(meetingsFiltered).forEach(function (element) {
+
+                    address=element.address+','+element.town;
+                    console.log(address);
+
+                            map.setCenter(element.position);
+
+                            var link = '<p></p><a href="https://www.google.com/maps/search/?api=1&query=' + address + '" target="_blank">' + 'Click here for directions' + '</a><br/>';
+
+                            var infowindow = new google.maps.InfoWindow(
+                                {
+                                    content: '<b>' + address + '</b>' + link,
+                                    size: new google.maps.Size(150, 50)
+                                });
+
+                            var marker = new google.maps.Marker({
+                                position: element.position,
+                                map: map,
+                                title: address
+                            });
+                            google.maps.event.addListener(marker, 'click', function () {
+                                infowindow.open(map, marker);
+                                //window.location.href = "https://www.google.com/maps/search/?api=1&query="+this.title;
+
+                            });
+
+                });
+
+        });
+        }
+    </script>
+</head>
+<body style="margin:0px; padding:0px;" onload="initialize()">
+
+<form action="#">
+
+    <fieldset>
+        <label for="day">Select a day</label>
+        <select name="day" id="day">
+            <option selected="selected">All</option>
+            <option>M</option>
+            <option>T</option>
+        </select>
+    </fieldset>
+
+</form>
+<div id="map_canvas" style="width:100%; height:100%">
+</body>
+</html>
