@@ -3,6 +3,14 @@ var fs = require('fs');
 const writeJsonFile = require('write-json-file');
 var loader = require('csv-load-sync');
 var Promise = require('bluebird')
+var config = require('config');
+
+try {
+    var googMapAPI = config.get('googMapAPI');
+}
+catch (err){
+    throw "Please add a config/default.json with a googMapAPI key/value"
+}
 
 var Bottleneck = require("bottleneck");
 Bottleneck.prototype.Promise = Promise;
@@ -10,7 +18,7 @@ Bottleneck.prototype.Promise = Promise;
 var limiter = new Bottleneck(0, 1000);
 
 var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyDpQD_Z2xomoGD7KZ-yUDF_H64lgd6Hwho',
+    key: googMapAPI,
     Promise: Promise
 });
 
